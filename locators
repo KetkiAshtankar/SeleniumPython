@@ -1,0 +1,439 @@
+Locators in Selenium are used to find HTML elements on a web page. Selenium 4, like its predecessors, supports a variety of locators that allow you to interact with web elements. Here are the main types of locators available in Selenium 4:
+
+1. **ID**: Locates elements by their unique `id` attribute.
+   ```python
+   driver.find_element(By.ID, "element_id")
+   ```
+
+2. **Name**: Locates elements by their `name` attribute.
+   ```python
+   driver.find_element(By.NAME, "element_name")
+   ```
+
+3. **Class Name**: Locates elements by their `class` attribute.
+   ```python
+   driver.find_element(By.CLASS_NAME, "element_class")
+   ```
+
+4. **Tag Name**: Locates elements by their tag name.
+   ```python
+   driver.find_element(By.TAG_NAME, "element_tag")
+   ```
+
+5. **Link Text**: Locates anchor elements (`<a>`) by their visible text.
+   ```python
+   driver.find_element(By.LINK_TEXT, "visible_text")
+   ```
+
+6. **Partial Link Text**: Locates anchor elements (`<a>`) by a substring of their visible text.
+   ```python
+   driver.find_element(By.PARTIAL_LINK_TEXT, "partial_text")
+   ```
+
+7. **CSS Selector**: Locates elements by their CSS selectors.
+   ```python
+   driver.find_element(By.CSS_SELECTOR, "css_selector")
+   ```
+
+8. **XPath**: Locates elements by their XPath expressions.
+   ```python
+   driver.find_element(By.XPATH, "xpath_expression")
+   ```
+
+### New Locators in Selenium 4
+
+Selenium 4 introduces some new and improved ways to locate elements:
+
+1. **Relative Locators**: These allow you to find elements based on their relative position to other elements. This is particularly useful for complex layouts.
+   - **Above**: Locates elements above a specified element.
+     ```python
+     driver.find_element(with(By.TAG_NAME, "label").above(reference_element))
+     ```
+   - **Below**: Locates elements below a specified element.
+     ```python
+     driver.find_element(with(By.TAG_NAME, "label").below(reference_element))
+     ```
+   - **To Left Of**: Locates elements to the left of a specified element.
+     ```python
+     driver.find_element(with(By.TAG_NAME, "label").to_left_of(reference_element))
+     ```
+   - **To Right Of**: Locates elements to the right of a specified element.
+     ```python
+     driver.find_element(with(By.TAG_NAME, "label").to_right_of(reference_element))
+     ```
+   - **Near**: Locates elements near a specified element within a certain distance.
+     ```python
+     driver.find_element(with(By.TAG_NAME, "label").near(reference_element))
+     ```
+
+
+Example: 1)
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.relative_locator import with_
+
+# Initialize the driver
+driver = webdriver.Chrome()
+
+# Open the Sauce Demo login page
+driver.get("https://www.saucedemo.com")
+
+# Locate elements using different locators
+username_field_id = driver.find_element(By.ID, "user-name")
+password_field_id = driver.find_element(By.ID, "password")
+login_button_id = driver.find_element(By.ID, "login-button")
+
+login_button_class = driver.find_element(By.CLASS_NAME, "btn_action")
+
+inputs_tag = driver.find_elements(By.TAG_NAME, "input")
+buttons_tag = driver.find_elements(By.TAG_NAME, "button")
+
+
+Example 2)
+Sure, here’s how you can use relative locators on the [Sauce Demo Inventory page](https://www.saucedemo.com/inventory.html):
+
+### Example Setup
+
+Let’s say we want to use relative locators with elements on the Sauce Demo inventory page. The page contains various elements such as product items, images, and buttons.
+
+### Example Relative Locators
+
+1. **Locate an Element Above Another Element**
+
+   Suppose we want to find a product image located above the product name. 
+
+   ```python
+   from selenium import webdriver
+   from selenium.webdriver.common.by import By
+   from selenium.webdriver.support.relative_locator import with_
+
+   driver = webdriver.Chrome()
+   driver.get("https://www.saucedemo.com/inventory.html")
+
+   # Locate a product name (reference element)
+   product_name = driver.find_element(By.CLASS_NAME, "inventory_item_name")
+
+   # Locate the product image above the product name
+   product_image_above = driver.find_element(with_(By.CLASS_NAME, "inventory_item_img").above(product_name))
+   ```
+
+2. **Locate an Element Below Another Element**
+
+   Suppose you want to find the “Add to cart” button located below a product name.
+
+   ```python
+   from selenium import webdriver
+   from selenium.webdriver.common.by import By
+   from selenium.webdriver.support.relative_locator import with_
+
+   driver = webdriver.Chrome()
+   driver.get("https://www.saucedemo.com/inventory.html")
+
+   # Locate a product name (reference element)
+   product_name = driver.find_element(By.CLASS_NAME, "inventory_item_name")
+
+   # Locate the "Add to cart" button below the product name
+   add_to_cart_button_below = driver.find_element(with_(By.CLASS_NAME, "btn_inventory").below(product_name))
+   ```
+
+3. **Locate an Element to the Left of Another Element**
+
+   Suppose you want to find the product image that is to the left of the product name.
+
+   ```python
+   from selenium import webdriver
+   from selenium.webdriver.common.by import By
+   from selenium.webdriver.support.relative_locator import with_
+
+   driver = webdriver.Chrome()
+   driver.get("https://www.saucedemo.com/inventory.html")
+
+   # Locate a product name (reference element)
+   product_name = driver.find_element(By.CLASS_NAME, "inventory_item_name")
+
+   # Locate the product image to the left of the product name
+   product_image_left = driver.find_element(with_(By.CLASS_NAME, "inventory_item_img").to_left_of(product_name))
+   ```
+
+4. **Locate an Element to the Right of Another Element**
+
+   Suppose you want to find the product price that is to the right of the product name.
+
+   ```python
+   from selenium import webdriver
+   from selenium.webdriver.common.by import By
+   from selenium.webdriver.support.relative_locator import with_
+
+   driver = webdriver.Chrome()
+   driver.get("https://www.saucedemo.com/inventory.html")
+
+   # Locate a product name (reference element)
+   product_name = driver.find_element(By.CLASS_NAME, "inventory_item_name")
+
+   # Locate the product price to the right of the product name
+   product_price_right = driver.find_element(with_(By.CLASS_NAME, "inventory_item_price").to_right_of(product_name))
+   ```
+
+### Summary
+
+- **Above**: Use `.above(reference_element)` to find elements above the reference element.
+- **Below**: Use `.below(reference_element)` to find elements below the reference element.
+- **To Left Of**: Use `.to_left_of(reference_element)` to find elements to the left of the reference element.
+- **To Right Of**: Use `.to_right_of(reference_element)` to find elements to the right of the reference element.
+
+This approach allows you to find elements based on their relative positioning without using XPath, which can be especially useful for complex layouts or when dealing with dynamic content.
+
+
+XPATH 
+What is XPath?
+XPath (XML Path Language) is a way to find and select parts of an XML document or a webpage. Think of it as a search tool that helps you pinpoint exactly where you want to look within a structured document, such as a webpage or an XML file.
+How Does XPath Work?
+Imagine you have a big box of organized files (like a folder full of documents). XPath helps you find specific files or pieces of information inside that box without having to dig through everything manually.
+Key Concepts
+1.	Paths:
+o	Absolute Path: Like a direct address. It tells you exactly where to go starting from the top. For example, /folder/subfolder/document points directly to the document inside the subfolder of the folder.
+o	Relative Path: Like a shortcut. It starts from where you are right now and finds something from there. For example, //document finds any document anywhere from the current position.
+Show navigation of tables, rows and columns.  On https://cosmocode.io/automation-practice-webtable/
+
+XPATH WITH PARTIAL TEXT MATCH:
+ # Find element where text contains 'backpack'
+item = driver.find_element(By.XPATH, "//div[contains(text(), 'backpack')]")
+
+# Find element where text starts with 'Sauce'
+item = driver.find_element(By.XPATH, "//div[starts-with(text(), 'Sauce')]")
+# Find element with exact text 'Submit' element = driver.find_element(By.XPATH, "//*[text()='Submit']")
+
+Create Xpath from normal locators of ID, Class, Name.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+XPath axes are a way to navigate through elements and attributes in an XML document relative to the current node. Here are the most commonly used axes in XPath:
+
+1. **self**: Selects the current node.
+   - `self::node()`
+
+2. **parent**: Selects the parent of the current node.
+   - `parent::node()`
+
+3. **child**: Selects all children of the current node.
+   - `child::node()`
+
+4. **descendant**: Selects all descendants (children, grandchildren, etc.) of the current node.
+   - `descendant::node()`
+
+5. **ancestor**: Selects all ancestors (parent, grandparent, etc.) of the current node.
+   - `ancestor::node()`
+
+6. **following-sibling**: Selects all siblings after the current node.
+   - `following-sibling::node()`
+
+7. **preceding-sibling**: Selects all siblings before the current node.
+   - `preceding-sibling::node()`
+
+8. **following**: Selects everything in the document after the closing tag of the current node.
+   - `following::node()`
+
+9. **preceding**: Selects everything in the document before the opening tag of the current node.
+   - `preceding::node()`
+
+10. **attribute**: Selects all attributes of the current node.
+    - `attribute::*`
+
+11. **namespace**: Selects all namespace nodes of the current node.
+    - `namespace::*`
+
+12. **ancestor-or-self**: Selects the current node and all ancestors of the current node.
+    - `ancestor-or-self::node()`
+
+13. **descendant-or-self**: Selects the current node and all descendants of the current node.
+    - `descendant-or-self::node()`
+
+14. **self**: Selects the current node.
+    - `self::node()`
+
+## Examples
+
+1. **Selecting all child elements of the current node**:
+   - `child::*`
+
+2. **Selecting all descendant elements of the current node**:
+   - `descendant::*`
+
+3. **Selecting the parent element of the current node**:
+   - `parent::*`
+
+4. **Selecting all attributes of the current node**:
+   - `attribute::*`
+
+5. **Selecting all following sibling elements of the current node**:
+   - `following-sibling::*`
+
+Using these axes, you can construct complex queries to navigate and manipulate XML documents effectively.
+
+
+Converting XPath to CSS selectors can be useful when you need to switch between different methods for locating elements, especially if you are working with tools or libraries that prefer CSS selectors over XPath. Here’s a guide on how to convert common XPath expressions to their CSS selector equivalents:
+
+### Basic Conversions
+
+1. **Element by Tag Name**
+
+   - **XPath**: `//div`
+   - **CSS**: `div`
+
+   Example:
+   ```python
+   driver.find_element(By.CSS_SELECTOR, "div")
+   ```
+
+2. **Element by ID**
+
+   - **XPath**: `//*[@id='example']`
+   - **CSS**: `#example`
+
+   Example:
+   ```python
+   driver.find_element(By.CSS_SELECTOR, "#example")
+   ```
+
+3. **Element by Class Name**
+
+   - **XPath**: `//*[contains(@class, 'example')]`
+   - **CSS**: `.example`
+
+   Example:
+   ```python
+   driver.find_element(By.CSS_SELECTOR, ".example")
+   ```
+
+4. **Element by Attribute**
+
+   - **XPath**: `//*[@type='text']`
+   - **CSS**: `[type='text']`
+
+   Example:
+   ```python
+   driver.find_element(By.CSS_SELECTOR, "[type='text']")
+   ```
+
+### Advanced Conversions
+
+1. **Child Elements**
+
+   - **XPath**: `//div/ul`
+   - **CSS**: `div > ul`
+
+   Example:
+   ```python
+   driver.find_element(By.CSS_SELECTOR, "div > ul")
+   ```
+
+2. **Descendant Elements**
+
+   - **XPath**: `//div//a`
+   - **CSS**: `div a`
+
+   Example:
+   ```python
+   driver.find_element(By.CSS_SELECTOR, "div a")
+   ```
+
+3. **Adjacent Sibling**
+
+   - **XPath**: `//h1/following-sibling::p`
+   - **CSS**: `h1 + p`
+
+   Example:
+   ```python
+   driver.find_element(By.CSS_SELECTOR, "h1 + p")
+   ```
+
+4. **General Sibling**
+
+   - **XPath**: `//h1/following-sibling::p`
+   - **CSS**: `h1 ~ p`
+
+   Example:
+   ```python
+   driver.find_element(By.CSS_SELECTOR, "h1 ~ p")
+   ```
+
+5. **Text Matching**
+
+   - **XPath**: `//button[text()='Submit']`
+   - **CSS**: `button` with `:contains('Submit')` (Note: CSS does not directly support text content matching like XPath. This needs to be handled programmatically.)
+
+   Example:
+   ```python
+   # CSS Selector alone does not support text matching. Use XPath for this.
+   ```
+
+### Using CSS Selectors for Attributes
+
+1. **Element with Multiple Attributes**
+
+   - **XPath**: `//input[@type='submit' and @value='Submit']`
+   - **CSS**: `input[type='submit'][value='Submit']`
+
+   Example:
+   ```python
+   driver.find_element(By.CSS_SELECTOR, "input[type='submit'][value='Submit']")
+   ```
+
+2. **Contains Attribute Value**
+
+   - **XPath**: `//*[contains(@class, 'example')]`
+   - **CSS**: `[class*='example']`
+
+   Example:
+   ```python
+   driver.find_element(By.CSS_SELECTOR, "[class*='example']")
+   ```
+
+### Summary of CSS Selector Syntax
+
+- **Element**: `tagname`
+- **ID**: `#id`
+- **Class**: `.class`
+- **Attribute**: `[attribute='value']`
+- **Contains Attribute Value**: `[attribute*='value']`
+- **Child Selector**: `parent > child`
+- **Descendant Selector**: `ancestor descendant`
+- **Adjacent Sibling**: `previous + next`
+- **General Sibling**: `previous ~ siblings`
+
+### Practical Conversion Example
+
+**XPath to CSS Selector Example**
+
+- **XPath**: `//div[@class='container']//span[@id='example']`
+- **CSS**: `div.container span#example`
+
+   ```python
+   driver.find_element(By.CSS_SELECTOR, "div.container span#example")
+   ```
+
+Understanding these conversions helps you work with different locators effectively and choose the best method based on your specific needs and constraints.
+
+Practice here: https://cosmocode.io/automation-practice-webtable/
+
+
+
+
+
